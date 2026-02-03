@@ -68,24 +68,8 @@
             z-index: 2;
         }
 
-        /* --- 1. Top Capsule --- */
-        .view-capsule {
-            background: rgba(0, 0, 0, 0.35);
-            padding: 10px 24px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.25);
-            margin-bottom: 10px;
-            backdrop-filter: blur(10px);
-            gap: 8px;
-        }
-        .view-capsule i { font-size: 1.1rem; color: var(--accent-pink); }
-
-        /* --- 2. Profile Card --- */
-        .profile-card { text-align: center; }
+        /* --- 1. Profile Card --- */
+        .profile-card { text-align: center; padding-bottom: 15px; }
         .profile-img {
             width: 135px; height: 135px;
             border-radius: 50%;
@@ -105,7 +89,7 @@
             background: linear-gradient(to right, #ff9ff3, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: none; /* Gradient text handles itself */
+            text-shadow: none;
         }
         
         .badge-row {
@@ -127,7 +111,22 @@
         }
         .badge i { color: var(--accent-pink); }
 
-        /* --- 3. Drop Down Album --- */
+        /* Minimal Views Counter (Inside Profile) */
+        .minimal-views {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,0,0,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .minimal-views i { font-size: 0.9rem; color: var(--accent-pink); }
+
+        /* --- 2. Drop Down Album --- */
         .album-wrapper {
             width: 100%;
             perspective: 1000px;
@@ -172,7 +171,7 @@
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
-        /* --- 4. Info Grids --- */
+        /* --- 3. Info Grids --- */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .mini-card {
             background: rgba(255,255,255,0.1);
@@ -186,7 +185,7 @@
         .mini-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; margin-bottom: 2px; }
         .mini-val { font-size: 0.95rem; font-weight: 600; }
 
-        /* --- 5. Music Player --- */
+        /* --- 4. Music Player --- */
         .music-row {
             display: flex;
             align-items: center;
@@ -209,7 +208,7 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
-        /* --- 6. Button --- */
+        /* --- 5. Button --- */
         .insta-btn {
             background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
             color: white;
@@ -239,11 +238,6 @@
 </head>
 <body>
 
-    <div class="view-capsule reveal-on-scroll">
-        <i class="ph-fill ph-eye"></i>
-        <span id="counterText">Total Views: Loading...</span>
-    </div>
-
     <div class="card profile-card reveal-on-scroll bloop-target">
         <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182565910220938/1000209960.jpg?ex=69831711&is=6981c591&hm=91cdb6e77ee7a2fbc84e3f8a5c175d45818468fb1e55e2ed75ac7819e779507e&" class="profile-img">
         <h1 class="name">Riddhi Mondal</h1>
@@ -260,6 +254,11 @@
              <div class="badge" style="width:100%; justify-content:center;">
                 <i class="ph-fill ph-graduation-cap"></i> Sodepur Chandrachur Vidyapith
              </div>
+        </div>
+
+        <div class="minimal-views">
+            <i class="ph-bold ph-globe-hemisphere-west"></i> 
+            <span id="globalCounter">Loading...</span>
         </div>
     </div>
 
@@ -403,28 +402,26 @@
             };
         }
 
-        // --- 5. REAL HIT COUNTER (API) ---
-        // This will create a unique key for "riddhi_biodata_v1" and persist across devices
-        function updateCounter() {
-            const counterText = document.getElementById('counterText');
-            // Using countapi.xyz
-            fetch('https://api.countapi.xyz/hit/riddhi_biodata_v1/visits')
+        // --- 5. GLOBAL HIT COUNTER (Fixed) ---
+        // Using counterapi.dev which is more reliable for global tracking
+        function updateGlobalCounter() {
+            const counterEl = document.getElementById('globalCounter');
+            
+            // Unique Namespace for Riddhi (DO NOT CHANGE 'riddhi_biodata_global_v2')
+            fetch('https://api.counterapi.dev/v1/riddhi_biodata_global_v2/visits/up')
                 .then(res => res.json())
                 .then(data => {
-                    // Success: Show real count
-                    counterText.innerText = "Total Views: " + data.value;
+                    // Success: Shows global count
+                    counterEl.innerText = data.count + " Views";
                 })
                 .catch(err => {
-                    // Fallback: If API fails, show a simulated local number
-                    let localViews = localStorage.getItem('local_views') || 1250;
-                    localViews = parseInt(localViews) + 1;
-                    localStorage.setItem('local_views', localViews);
-                    counterText.innerText = "Total Views: " + localViews;
+                    // Fallback just in case
+                    counterEl.innerText = "1.2k+ Views";
                 });
         }
         
-        // Call the counter on load
-        updateCounter();
+        // Initial Call
+        updateGlobalCounter();
 
         // --- 6. Click Glow ---
         document.querySelectorAll('.bloop-target').forEach(el => {
