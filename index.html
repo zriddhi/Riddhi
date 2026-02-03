@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riddhi | Biodata</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         :root {
-            /* Ultra Transparent White Glass */
-            --glass-bg: rgba(255, 255, 255, 0.12); 
-            --glass-border: rgba(255, 255, 255, 0.35);
-            --glass-blur: blur(18px);
-            --text-color: #ffffff;
-            --accent-pink: #ff9ff3;
-            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-            --bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Ultra Premium Glass Variables */
+            --glass-bg: rgba(255, 255, 255, 0.08); 
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-highlight: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(24px);
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            
+            --accent-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
+            --accent-color: #ff9ff3;
+            
+            --card-radius: 32px;
+            --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -27,243 +33,314 @@
             font-family: 'Poppins', sans-serif;
             background: url('https://cdn.discordapp.com/attachments/1345025532659503115/1468182342739951729/25-12-16_11-31-41-331.jpg?ex=698316dc&is=6981c55c&hm=dee358c4c4a4d5041f2595122f1b7b9f51c61651bcbfa2bbb47e1e3cdbbb32c2&') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-color);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 24px;
             overflow-x: hidden;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
         }
 
-        /* Text Shadow for Readability */
-        h1, h2, h3, div, p, span, i {
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
+        /* Subtle shadows for text readability */
+        h1, h2, h3, .nickname { text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        /* Scroll Animation */
+        /* --- Scroll Animation --- */
         .reveal-on-scroll {
             opacity: 0;
-            transform: translateY(40px) scale(0.96);
-            transition: all 0.8s ease-out;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal-on-scroll.is-visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
-        /* Glass Card */
+        /* --- Modern Glass Card --- */
         .card {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            box-shadow: var(--card-shadow);
+            border-top: 1px solid rgba(255,255,255,0.4); /* Top highlight */
+            border-radius: var(--card-radius);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
             width: 100%;
             max-width: 380px;
-            padding: 25px;
+            padding: 28px;
             position: relative;
-            z-index: 2;
+            overflow: hidden;
         }
 
-        /* --- 1. Profile Card --- */
-        .profile-card { text-align: center; padding-bottom: 15px; }
-        .profile-img {
-            width: 135px; height: 135px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.6);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 15px;
-        }
-        .name { font-size: 1.9rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
-        .nickname { 
-            color: var(--accent-pink);
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #ff9ff3, #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none;
+        /* --- 1. Profile Section --- */
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
         
-        .badge-row {
+        .img-container {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        
+        .profile-img {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .crown-icon {
+            position: absolute;
+            top: -15px; right: 5px;
+            font-size: 2rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .name { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            margin: 0; 
+            line-height: 1.1;
+        }
+        
+        .nickname { 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            margin: 0 0 20px 0;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        /* Chips / Badges */
+        .chips-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
+            width: 100%;
         }
-        .badge {
+        
+        .chip {
             background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex; align-items: center; gap: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .chip:active { transform: scale(0.95); background: rgba(255,255,255,0.25); }
+        .chip i { color: #ffcaec; font-size: 1rem; }
+
+        /* Views Counter Minimal */
+        .views-pill {
+            margin-top: 25px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            background: rgba(0,0,0,0.2);
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; gap: 8px;
         }
-        .badge i { color: var(--accent-pink); }
-
-        /* Minimal Views Counter (Inside Profile) */
-        .minimal-views {
-            margin-top: 20px;
-            font-size: 0.75rem;
-            opacity: 0.8;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0,0,0,0.2);
-            padding: 4px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .views-pill .dot {
+            width: 6px; height: 6px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 8px #00ff88;
         }
-        .minimal-views i { font-size: 0.9rem; color: var(--accent-pink); }
 
-        /* --- 2. Drop Down Album --- */
+        /* --- 2. Album Drop Down (Refined) --- */
         .album-wrapper {
             width: 100%;
-            perspective: 1000px;
-            cursor: pointer;
-            transition: height 0.6s ease;
             height: 240px; 
             position: relative;
+            perspective: 1000px;
+            transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            margin-top: 10px;
         }
-        .album-wrapper.expanded { height: 1000px; }
+        .album-wrapper.expanded { height: 950px; }
 
         .stack-photo {
             position: absolute;
             left: 50%;
             width: 90%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
             border-radius: 24px;
-            border: 2px solid rgba(255,255,255,0.9);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             transition: all 0.8s var(--bounce);
             transform-origin: center top;
             margin-left: -45%; 
-            background: #222;
-        }
-
-        /* Stack State */
-        .stack-photo:nth-child(1) { z-index: 5; top: 0; transform: rotate(-2deg); }
-        .stack-photo:nth-child(2) { z-index: 4; top: 10px; transform: rotate(3deg) scale(0.96); }
-        .stack-photo:nth-child(3) { z-index: 3; top: 20px; transform: rotate(-4deg) scale(0.92); }
-        .stack-photo:nth-child(4) { z-index: 2; top: 30px; transform: rotate(2deg) scale(0.88); }
-        .stack-photo:nth-child(5) { z-index: 1; top: 40px; transform: rotate(-2deg) scale(0.84); }
-
-        /* Expanded State */
-        .album-wrapper.expanded .stack-photo:nth-child(1) { top: 0; transform: rotate(0) scale(1); }
-        .album-wrapper.expanded .stack-photo:nth-child(2) { top: 220px; transform: rotate(0) scale(1); }
-        .album-wrapper.expanded .stack-photo:nth-child(3) { top: 440px; transform: rotate(0) scale(1); }
-        .album-wrapper.expanded .stack-photo:nth-child(4) { top: 660px; transform: rotate(0) scale(1); }
-        .album-wrapper.expanded .stack-photo:nth-child(5) { top: 880px; transform: rotate(0) scale(1); }
-
-        .hint-text {
-            text-align: center; font-size: 0.8rem; opacity: 0.9; margin-bottom: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
-
-        /* --- 3. Info Grids --- */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .mini-card {
-            background: rgba(255,255,255,0.1);
-            padding: 16px;
-            border-radius: 24px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.15);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .mini-icon { font-size: 1.5rem; color: var(--accent-pink); margin-bottom: 6px; }
-        .mini-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; margin-bottom: 2px; }
-        .mini-val { font-size: 0.95rem; font-weight: 600; }
-
-        /* --- 4. Music Player --- */
-        .music-row {
-            display: flex;
-            align-items: center;
-            background: rgba(0,0,0,0.25);
-            margin-bottom: 10px;
-            padding: 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.2s;
-        }
-        .music-row:active { transform: scale(0.97); background: rgba(255,255,255,0.15); }
-        .play-btn {
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.9);
-            color: #222;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            margin-right: 15px;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-
-        /* --- 5. Button --- */
-        .insta-btn {
-            background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
-            color: white;
-            text-decoration: none;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            padding: 18px;
-            border-radius: 28px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-top: 10px;
-            box-shadow: 0 8px 25px rgba(255, 159, 243, 0.5);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        .insta-btn i { font-size: 1.4rem; text-shadow: none; }
-
-        /* Interactive Glow */
-        .glow-active {
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.7) !important;
-            transform: scale(0.98);
-            transition: all 0.2s;
+            background: #000;
         }
         
-        .section-title {
-            font-size: 0.85rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+        /* Stack Logic */
+        .stack-photo:nth-child(1) { z-index: 5; top: 0; transform: rotate(-3deg); }
+        .stack-photo:nth-child(2) { z-index: 4; top: 8px; transform: rotate(2deg) scale(0.96); }
+        .stack-photo:nth-child(3) { z-index: 3; top: 16px; transform: rotate(-2deg) scale(0.92); }
+        .stack-photo:nth-child(4) { z-index: 2; top: 24px; transform: rotate(1deg) scale(0.88); }
+        .stack-photo:nth-child(5) { z-index: 1; top: 32px; transform: rotate(-1deg) scale(0.84); }
+
+        /* Expanded Logic */
+        .album-wrapper.expanded .stack-photo:nth-child(1) { top: 0; transform: rotate(0) scale(1); }
+        .album-wrapper.expanded .stack-photo:nth-child(2) { top: 230px; transform: rotate(0) scale(1); }
+        .album-wrapper.expanded .stack-photo:nth-child(3) { top: 460px; transform: rotate(0) scale(1); }
+        .album-wrapper.expanded .stack-photo:nth-child(4) { top: 690px; transform: rotate(0) scale(1); }
+        .album-wrapper.expanded .stack-photo:nth-child(5) { top: 920px; transform: rotate(0) scale(1); }
+
+        .section-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            display: flex; align-items: center; gap: 8px;
         }
+
+        /* --- 3. Modern Info Grid --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .info-box {
+            background: rgba(255,255,255,0.06);
+            padding: 16px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.2s;
+        }
+        .info-box:active { background: rgba(255,255,255,0.15); }
+        .info-box i { font-size: 1.4rem; color: var(--accent-color); margin-bottom: 8px; }
+        .info-label { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 2px; }
+        .info-val { font-size: 0.95rem; font-weight: 600; }
+
+        /* --- 4. Playlist Modern --- */
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .song-row {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 18px;
+            background: transparent;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .song-row:active {
+            background: rgba(255,255,255,0.1);
+            transform: scale(0.98);
+        }
+        
+        .album-art-placeholder {
+            width: 45px; height: 45px;
+            background: linear-gradient(45deg, #eee, #999);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            margin-right: 15px;
+            font-size: 1rem; color: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .song-meta { flex: 1; }
+        .song-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+        .song-artist { font-size: 0.75rem; color: var(--text-secondary); }
+        
+        .play-indicator {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 0.8rem;
+        }
+
+        /* --- 5. Action Button --- */
+        .primary-btn {
+            background: white;
+            color: black;
+            width: 100%;
+            padding: 18px;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+            transition: 0.2s;
+        }
+        .primary-btn:active { transform: scale(0.95); opacity: 0.9; }
+        
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        
+        .glow-active {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(255,255,255,0.8) !important;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="card profile-card reveal-on-scroll bloop-target">
-        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182565910220938/1000209960.jpg?ex=69831711&is=6981c591&hm=91cdb6e77ee7a2fbc84e3f8a5c175d45818468fb1e55e2ed75ac7819e779507e&" class="profile-img">
+        <div class="img-container">
+            <div class="crown-icon">👑</div>
+            <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182565910220938/1000209960.jpg?ex=69831711&is=6981c591&hm=91cdb6e77ee7a2fbc84e3f8a5c175d45818468fb1e55e2ed75ac7819e779507e&" class="profile-img">
+        </div>
+        
         <h1 class="name">Riddhi Mondal</h1>
         <div class="nickname">CUTUU</div>
         
-        <p style="opacity: 1; font-weight: 500; font-size: 1.1rem; margin-top:0;">Professional Dancer <i class="ph-fill ph-person-simple-walk" style="vertical-align: middle;"></i></p>
-        
-        <div class="badge-row">
-            <div class="badge"><i class="ph-fill ph-cake"></i> 22 January</div>
-            <div class="badge"><i class="ph-fill ph-map-pin"></i> Sodepur</div>
+        <div class="tagline">
+            Professional Dancer <i class="ph-fill ph-sparkle" style="color:#ffd700;"></i>
         </div>
         
-        <div class="badge-row" style="margin-top:10px;">
-             <div class="badge" style="width:100%; justify-content:center;">
-                <i class="ph-fill ph-graduation-cap"></i> Sodepur Chandrachur Vidyapith
-             </div>
+        <div class="chips-container">
+            <div class="chip"><i class="ph-fill ph-cake"></i> 22 Jan</div>
+            <div class="chip"><i class="ph-fill ph-map-pin"></i> Sodepur</div>
+            <div class="chip" style="width: 100%; justify-content: center;">
+                <i class="ph-fill ph-student"></i> Sodepur Chandrachur Vidyapith
+            </div>
         </div>
 
-        <div class="minimal-views">
-            <i class="ph-bold ph-globe-hemisphere-west"></i> 
-            <span id="globalCounter">Loading...</span>
+        <div class="views-pill">
+            <div class="dot"></div>
+            <span id="globalCounter">Loading Views...</span>
         </div>
     </div>
 
     <div class="card reveal-on-scroll bloop-target" style="overflow: visible;">
-        <div class="hint-text"><i class="ph-bold ph-hand-tap"></i> Tap stack to view gallery</div>
+        <div class="section-header" style="justify-content: center;">
+            <i class="ph-fill ph-images-square"></i> Photo Gallery
+        </div>
         <div class="album-wrapper" id="albumStack" onclick="toggleAlbum()">
             <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468189213806563401/IMG_20251229_153905.jpg?ex=69831d42&is=6981cbc2&hm=10b0e40e69a487d45e2fb820360e89b1e496555690680ff6730cbde2ea9137db&" class="stack-photo">
             <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182369092636692/1000196707.jpg?ex=698316e2&is=6981c562&hm=8b34df35d46f3fdbdd65e961fe9ef7e029472d8a4f20924eeb75d02aa83d3598&" class="stack-photo">
@@ -271,117 +348,108 @@
             <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182326713253970/1000136171.jpg?ex=698316d8&is=6981c558&hm=6f08c8acf6b7fe166e5701fb0fe3e1029b1fe76b8d2ab56b206eb7fae09cd8e2&" class="stack-photo">
             <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468189231448064080/1000189980.jpg?ex=69831d46&is=6981cbc6&hm=8086a55d8440d3a85530f60cada3d1062c314eb3a37dea7741e385e2c08e3fc6&" class="stack-photo">
         </div>
+        <div style="text-align: center; font-size: 0.7rem; opacity: 0.6; margin-top: 10px;">Tap stack to unfold</div>
     </div>
 
     <div class="card reveal-on-scroll bloop-target">
-        <div class="section-title"><i class="ph-fill ph-heart"></i> Favorites</div>
+        <div class="section-header"><i class="ph-fill ph-heart"></i> Favorites</div>
         <div class="info-grid">
-            <div class="mini-card">
-                <i class="mini-icon ph-fill ph-palette"></i>
-                <div class="mini-label">Color</div>
-                <div class="mini-val">Black</div>
+            <div class="info-box">
+                <i class="ph-fill ph-paint-brush-broad"></i>
+                <div class="info-label">Color</div>
+                <div class="info-val">Black</div>
             </div>
-            <div class="mini-card">
-                <i class="mini-icon ph-fill ph-trophy"></i>
-                <div class="mini-label">Player</div>
-                <div class="mini-val">Virat Kohli</div>
+            <div class="info-box">
+                <i class="ph-fill ph-trophy"></i>
+                <div class="info-label">Player</div>
+                <div class="info-val">Virat Kohli</div>
             </div>
-            <div class="mini-card">
-                <i class="mini-icon ph-fill ph-film-strip"></i>
-                <div class="mini-label">Actors</div>
-                <div class="mini-val">Dev & Koyel</div>
+            <div class="info-box">
+                <i class="ph-fill ph-film-strip"></i>
+                <div class="info-label">Actors</div>
+                <div class="info-val">Dev & Koyel</div>
             </div>
-            <div class="mini-card">
-                <i class="mini-icon ph-fill ph-music-notes-simple"></i>
-                <div class="mini-label">Hobby</div>
-                <div class="mini-val">Dance</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card reveal-on-scroll bloop-target">
-        <div class="section-title"><i class="ph-fill ph-playlist"></i> My Playlist</div>
-        
-        <div class="music-row" onclick="playSong('song1.mp3', this)">
-            <div class="play-btn"><i class="ph-fill ph-play"></i></div>
-            <div>
-                <div style="font-weight:600;">Tomay Amay Mile</div>
-                <div style="font-size:0.75rem; opacity:0.8;">My Vibe</div>
-            </div>
-        </div>
-
-        <div class="music-row" onclick="playSong('song2.mp3', this)">
-            <div class="play-btn"><i class="ph-fill ph-play"></i></div>
-            <div>
-                <div style="font-weight:600;">Rimjhim e Dharate</div>
-                <div style="font-size:0.75rem; opacity:0.8;">Relaxing</div>
-            </div>
-        </div>
-
-        <div class="music-row" onclick="playSong('song3.mp3', this)">
-            <div class="play-btn"><i class="ph-fill ph-play"></i></div>
-            <div>
-                <div style="font-weight:600;">Kaise Hua</div>
-                <div style="font-size:0.75rem; opacity:0.8;">Love Song</div>
+            <div class="info-box">
+                <i class="ph-fill ph-music-notes"></i>
+                <div class="info-label">Hobby</div>
+                <div class="info-val">Dance</div>
             </div>
         </div>
     </div>
 
     <div class="card reveal-on-scroll bloop-target">
-        <a href="https://www.instagram.com/riddhiii_mondal_?igsh=MWN4a2dsdHJiempwbA==" class="insta-btn">
-            <i class="ph-fill ph-instagram-logo"></i> Follow on Instagram
+        <div class="section-header"><i class="ph-fill ph-playlist"></i> My Playlist</div>
+        <div class="song-list">
+            
+            <div class="song-row" onclick="playSong('song1.mp3', this)">
+                <div class="album-art-placeholder"><i class="ph-fill ph-music-note"></i></div>
+                <div class="song-meta">
+                    <div class="song-title">Tomay Amay Mile</div>
+                    <div class="song-artist">My Vibe</div>
+                </div>
+                <div class="play-indicator"><i class="ph-fill ph-play"></i></div>
+            </div>
+
+            <div class="song-row" onclick="playSong('song2.mp3', this)">
+                <div class="album-art-placeholder"><i class="ph-fill ph-cloud-rain"></i></div>
+                <div class="song-meta">
+                    <div class="song-title">Rimjhim e Dharate</div>
+                    <div class="song-artist">Relaxing</div>
+                </div>
+                <div class="play-indicator"><i class="ph-fill ph-play"></i></div>
+            </div>
+
+            <div class="song-row" onclick="playSong('song3.mp3', this)">
+                <div class="album-art-placeholder"><i class="ph-fill ph-heart"></i></div>
+                <div class="song-meta">
+                    <div class="song-title">Kaise Hua</div>
+                    <div class="song-artist">Love Song</div>
+                </div>
+                <div class="play-indicator"><i class="ph-fill ph-play"></i></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card reveal-on-scroll bloop-target">
+        <a href="https://www.instagram.com/riddhiii_mondal_?igsh=MWN4a2dsdHJiempwbA==" class="primary-btn">
+            <i class="ph-logo ph-instagram-logo" style="font-size: 1.2rem;"></i> Follow on Instagram
         </a>
     </div>
 
     <script>
-        // --- 1. Audio Engine ---
+        // --- 1. Sound Engine ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBloop() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
+            osc.stop(audioCtx.currentTime + 0.15);
         }
 
-        // --- 2. Album Toggle ---
+        // --- 2. Album Logic ---
         function toggleAlbum() {
             playBloop();
-            const album = document.getElementById('albumStack');
-            album.classList.toggle('expanded');
+            document.getElementById('albumStack').classList.toggle('expanded');
         }
 
-        // --- 3. Scroll Reveal Animation ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                } else {
-                    entry.target.classList.remove('is-visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
-            observer.observe(el);
-        });
-
-        // --- 4. Music Player ---
+        // --- 3. Music Player ---
         let currentAudio = null;
         function playSong(file, row) {
             playBloop();
-            // Reset all icons to Play
-            document.querySelectorAll('.play-btn i').forEach(icon => {
-                icon.classList.remove('ph-pause');
-                icon.classList.add('ph-play');
+            // Reset icons
+            document.querySelectorAll('.play-indicator i').forEach(i => {
+                i.classList.remove('ph-pause');
+                i.classList.add('ph-play');
             });
-            
+
             if (currentAudio && !currentAudio.paused && currentAudio.src.includes(file)) {
                 currentAudio.pause();
                 return;
@@ -390,44 +458,37 @@
             if(currentAudio) currentAudio.pause();
             currentAudio = new Audio(file);
             currentAudio.play();
-            
-            // Set clicked icon to Pause
-            const icon = row.querySelector('.play-btn i');
+
+            // Set Pause Icon
+            const icon = row.querySelector('.play-indicator i');
             icon.classList.remove('ph-play');
             icon.classList.add('ph-pause');
-            
+
             currentAudio.onended = () => {
                 icon.classList.remove('ph-pause');
                 icon.classList.add('ph-play');
             };
         }
 
-        // --- 5. GLOBAL HIT COUNTER (Fixed) ---
-        // Using counterapi.dev which is more reliable for global tracking
-        function updateGlobalCounter() {
-            const counterEl = document.getElementById('globalCounter');
-            
-            // Unique Namespace for Riddhi (DO NOT CHANGE 'riddhi_biodata_global_v2')
-            fetch('https://api.counterapi.dev/v1/riddhi_biodata_global_v2/visits/up')
-                .then(res => res.json())
-                .then(data => {
-                    // Success: Shows global count
-                    counterEl.innerText = data.count + " Views";
-                })
-                .catch(err => {
-                    // Fallback just in case
-                    counterEl.innerText = "1.2k+ Views";
-                });
-        }
-        
-        // Initial Call
-        updateGlobalCounter();
+        // --- 4. Scroll Reveal ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        // --- 6. Click Glow ---
+        // --- 5. Global Counter ---
+        fetch('https://api.counterapi.dev/v1/riddhi_biodata_global_v2/visits/up')
+            .then(res => res.json())
+            .then(data => { document.getElementById('globalCounter').innerText = data.count + " Profile Views"; })
+            .catch(() => { document.getElementById('globalCounter').innerText = "1.2k+ Profile Views"; });
+
+        // --- 6. Click Effects ---
         document.querySelectorAll('.bloop-target').forEach(el => {
             el.addEventListener('click', function() {
                 this.classList.add('glow-active');
-                setTimeout(() => this.classList.remove('glow-active'), 200);
+                setTimeout(() => this.classList.remove('glow-active'), 250);
             });
         });
     </script>
