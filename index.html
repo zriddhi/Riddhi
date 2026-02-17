@@ -12,7 +12,8 @@
             --glass-bg: rgba(255, 255, 255, 0.025); 
             --glass-border: rgba(255, 255, 255, 0.15);
             --glass-glow: 0 0 25px rgba(255, 159, 243, 0.2);
-            --glass-blur: blur(25px);
+            /* EXTREME BLUR applied here */
+            --glass-blur: blur(50px);
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.85);
             --accent: #ff9ff3;
@@ -24,7 +25,7 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Manrope', sans-serif;
-            background: url('https://cdn.discordapp.com/attachments/1345025532659503115/1468182342739951729/25-12-16_11-31-41-331.jpg?ex=698316dc&is=6981c55c&hm=dee358c4c4a4d5041f2595122f1b7b9f51c61651bcbfa2bbb47e1e3cdbbb32c2&') no-repeat center center fixed;
+            background: url('https://i.ibb.co/ksMs6xkL/IMG-20260217-103952.jpg') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-main);
             min-height: 100vh;
@@ -33,16 +34,59 @@
             padding-bottom: 40px; 
         }
 
-        /* --- CONTAINER --- */
-        .app-container {
-            width: 100%; max-width: 420px;
-            padding: 20px 20px 40px 20px; 
-            display: flex; flex-direction: column; gap: 30px;
+        /* --- 1. SIGNATURE INTRO (Top Aligned) --- */
+        .intro-layer {
+            position: fixed; inset: 0;
+            background: #000; z-index: 9999;
+            display: flex; flex-direction: column; 
+            justify-content: flex-start; align-items: center; 
+            padding-top: 25vh;
+            transition: opacity 1s ease, visibility 1s;
         }
 
-        /* --- CARD ENGINE --- */
+        .sig-wrapper {
+            position: relative;
+            width: 300px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .signature-img {
+            width: 100%;
+            filter: invert(1) brightness(2);
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 3s cubic-bezier(0.45, 0, 0.55, 1);
+        }
+
+        .intro-sub {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            opacity: 0; transform: translateY(20px);
+            transition: all 1s ease 2s;
+        }
+
+        .play-intro .signature-img { clip-path: inset(0 0 0 0); }
+        .play-intro .intro-sub { opacity: 1; transform: translateY(0); }
+        .intro-finish { opacity: 0; visibility: hidden; pointer-events: none; }
+
+
+        /* --- 2. MAIN APP CONTAINER --- */
+        .app-container {
+            width: 100%; max-width: 420px;
+            padding: 40px 20px 40px 20px; 
+            display: flex; flex-direction: column; gap: 30px;
+            opacity: 0; transform: scale(0.8); filter: blur(10px);
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .app-visible { opacity: 1; transform: scale(1); filter: blur(0); }
+
+
+        /* --- 3. UI COMPONENTS --- */
         .holo-card {
             background: var(--glass-bg);
+            /* Applies the heavy 50px blur to all main cards */
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
             border-radius: var(--card-radius);
@@ -53,7 +97,7 @@
         
         h1, h2, h3, div, span, p { text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
 
-        /* --- PROFILE --- */
+        /* Profile Layout */
         .profile-layout { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
         
         /* Butterflies */
@@ -79,7 +123,6 @@
             display: flex; justify-content: center; align-items: center;
             margin-bottom: 20px;
         }
-        
         .spinning-border {
             position: absolute; inset: 0; border-radius: 50%;
             border: 2px solid transparent;
@@ -88,7 +131,6 @@
             animation: rotate 3s linear infinite;
             filter: drop-shadow(0 0 10px var(--accent));
         }
-
         .avatar-main {
             width: 115px; height: 115px; border-radius: 50%; object-fit: cover;
             border: 3px solid #fff;
@@ -102,57 +144,48 @@
             margin-bottom: 12px;
         }
         
-        /* --- NEW: PREMIUM DANCER TAG (No Emoji, Full Glow) --- */
         .premium-tag {
             font-family: 'Syncopate', sans-serif;
             font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            color: #fff;
-            padding: 10px 25px;
-            background: rgba(255, 159, 243, 0.15);
-            border: 1px solid rgba(255, 159, 243, 0.6);
-            border-radius: 4px; /* Slightly squared for premium look */
-            box-shadow: 0 0 20px rgba(255, 159, 243, 0.4);
-            margin-bottom: 25px;
-            animation: text-pulse 3s infinite alternate;
+            color: #fff; padding: 10px 25px;
+            background: rgba(255, 159, 243, 0.15); border: 1px solid rgba(255, 159, 243, 0.6);
+            border-radius: 4px; box-shadow: 0 0 20px rgba(255, 159, 243, 0.4);
+            margin-bottom: 25px; animation: text-pulse 3s infinite alternate;
         }
         @keyframes text-pulse {
             0% { box-shadow: 0 0 15px rgba(255, 159, 243, 0.3); border-color: rgba(255, 159, 243, 0.4); }
             100% { box-shadow: 0 0 30px rgba(255, 159, 243, 0.7); border-color: #fff; }
         }
 
-        /* --- NEW: MEDIUM GLASS INFO TILES --- */
+        /* Info Tiles */
         .glass-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
             width: 100%; margin-bottom: 20px;
         }
-
         .glass-box {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 16px;
-            padding: 15px; /* Medium padding */
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px; padding: 15px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
+            /* INCREASED BLUR on info tiles */
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             transition: 0.3s;
         }
         .glass-box:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
         .full-width { grid-column: span 2; flex-direction: row; gap: 10px; }
-
         .gb-icon { font-size: 1.2rem; color: var(--accent); margin-bottom: 4px; }
         .gb-text { font-size: 0.9rem; font-weight: 700; color: #fff; }
         .gb-label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; }
         .full-width .gb-icon { margin-bottom: 0; }
 
-
-        /* --- NEW: SMALL LIQUID VIEW CAPSULE --- */
+        /* Liquid View Capsule */
         .liquid-capsule {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 6px 16px; border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
             font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);
-            backdrop-filter: blur(15px);
+            /* INCREASED BLUR on view capsule */
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
         }
         .dot-live { width: 6px; height: 6px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 8px #00ff88; animation: blink 2s infinite; }
 
@@ -164,14 +197,10 @@
             display: flex; justify-content: center; align-items: center;
             margin: 10px 0 30px 0;
         }
-
         .carousel-3d {
-            width: 150px; height: 210px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spin3D 20s linear infinite;
+            width: 150px; height: 210px; position: relative;
+            transform-style: preserve-3d; animation: spin3D 20s linear infinite;
         }
-
         .card-3d {
             position: absolute; width: 150px; height: 210px;
             left: 0; top: 0; border-radius: 16px; overflow: hidden;
@@ -186,29 +215,23 @@
             font-family: 'Syncopate', sans-serif; font-size: 1rem; font-weight: 700;
             margin-bottom: 20px; color: #fff; letter-spacing: 2px; text-align: center;
         }
-
         .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
         .fav-tile {
             background: rgba(255,255,255,0.06); border-radius: 24px;
             padding: 15px; text-align: center;
             border: 1px solid rgba(255,255,255,0.1);
             display: flex; flex-direction: column; align-items: center;
         }
-
         .icon-box {
             width: 65px; height: 65px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             font-size: 1.8rem; color: #fff; margin-bottom: 10px;
             background: #000; border: 2px solid #333;
         }
-        
         .img-single { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.4); margin-bottom: 10px; }
-        
         .duo-stack { position: relative; width: 90px; height: 65px; margin-bottom: 10px; }
         .d-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; position: absolute; top: 5px; }
         .d-1 { left: 0px; z-index: 1; } .d-2 { right: 0px; z-index: 2; box-shadow: -5px 0 10px rgba(0,0,0,0.5); }
-
         .f-name { font-weight: 800; font-size: 0.95rem; color: #fff; }
         .f-role { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-top: 4px; }
 
@@ -218,16 +241,13 @@
             display: flex; align-items: center; gap: 15px;
             padding: 12px; border-radius: 20px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            /* EXTRA BLUR applied directly to song strips */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             transition: 0.2s; cursor: pointer; margin-bottom: 10px;
         }
         .music-strip:active { transform: scale(0.98); background: rgba(255,255,255,0.15); }
         .music-strip.active { background: linear-gradient(90deg, rgba(255, 159, 243, 0.2), transparent); border-color: var(--accent); }
-        
-        .song-art {
-            width: 50px; height: 50px; border-radius: 12px; object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
+        .song-art { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
         .play-overlay {
             width: 30px; height: 30px; border-radius: 50%; background: #fff; color: #000;
             display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
@@ -260,6 +280,13 @@
 </head>
 <body>
 
+    <div class="intro-layer" id="intro">
+        <div class="sig-wrapper">
+            <img src="https://i.ibb.co/GQ3h7my2/IMG-20260205-105514.png" class="signature-img">
+        </div>
+        <div class="intro-sub">Dev Adhikari</div>
+    </div>
+
     <div class="app-container" id="app">
         
         <div class="holo-card profile-layout scroll-reveal">
@@ -269,7 +296,7 @@
 
             <div class="avatar-ring">
                 <div class="spinning-border"></div>
-                <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182565910220938/1000209960.jpg?ex=69831711&is=6981c591&hm=91cdb6e77ee7a2fbc84e3f8a5c175d45818468fb1e55e2ed75ac7819e779507e&" class="avatar-main">
+                <img src="https://i.ibb.co/1YtbN90Q/IMG-20260217-101546.jpg" class="avatar-main">
             </div>
 
             <div class="name-glitch">Riddhi Mondal</div>
@@ -306,19 +333,19 @@
             <div class="scene-3d">
                 <div class="carousel-3d">
                     <div class="card-3d" style="transform: rotateY(0deg) translateZ(180px);">
-                        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468189213806563401/IMG_20251229_153905.jpg?ex=69831d42&is=6981cbc2&hm=10b0e40e69a487d45e2fb820360e89b1e496555690680ff6730cbde2ea9137db&">
+                        <img src="https://i.ibb.co/ksMs6xkL/IMG-20260217-103952.jpg">
                     </div>
                     <div class="card-3d" style="transform: rotateY(72deg) translateZ(180px);">
-                        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182369092636692/1000196707.jpg?ex=698316e2&is=6981c562&hm=8b34df35d46f3fdbdd65e961fe9ef7e029472d8a4f20924eeb75d02aa83d3598&">
+                        <img src="https://i.ibb.co/67JgS6y0/IMG-20260217-104245.jpg">
                     </div>
                     <div class="card-3d" style="transform: rotateY(144deg) translateZ(180px);">
-                        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182320849883136/1000208627.jpg?ex=698316d6&is=6981c556&hm=097aa135b490390b568945e1a693ddd2fc248f6d08746178391017546f857eee&">
+                        <img src="https://i.ibb.co/j9MjC5TT/IMG-20260217-104231.jpg">
                     </div>
                     <div class="card-3d" style="transform: rotateY(216deg) translateZ(180px);">
-                        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468182326713253970/1000136171.jpg?ex=698316d8&is=6981c558&hm=6f08c8acf6b7fe166e5701fb0fe3e1029b1fe76b8d2ab56b206eb7fae09cd8e2&">
+                        <img src="https://i.ibb.co/KxCrnpvD/IMG-20260217-104216.jpg">
                     </div>
                     <div class="card-3d" style="transform: rotateY(288deg) translateZ(180px);">
-                        <img src="https://cdn.discordapp.com/attachments/1345025532659503115/1468189231448064080/1000189980.jpg?ex=69831d46&is=6981cbc6&hm=8086a55d8440d3a85530f60cada3d1062c314eb3a37dea7741e385e2c08e3fc6&">
+                        <img src="https://i.ibb.co/MvrvngV/IMG-20260217-104205.jpg">
                     </div>
                 </div>
             </div>
@@ -398,13 +425,28 @@
     </div>
 
     <script>
-        // --- 1. REVEAL ON SCROLL ---
+        // --- 1. INTRO LOGIC ---
+        window.addEventListener('load', () => {
+            const intro = document.getElementById('intro');
+            const app = document.getElementById('app');
+
+            // Trigger Animation
+            setTimeout(() => intro.classList.add('play-intro'), 100);
+
+            // Zoom In App
+            setTimeout(() => {
+                intro.classList.add('intro-finish');
+                app.classList.add('app-visible');
+            }, 3500); // 3.5s total time
+        });
+
+        // --- 2. REVEAL ON SCROLL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-        // --- 2. MUSIC ---
+        // --- 3. MUSIC ---
         let currentAudio = null;
         function playSong(file, el) {
             if(navigator.vibrate) navigator.vibrate(10);
@@ -427,7 +469,7 @@
             el.querySelector('.play-overlay i').classList.replace('ph-play', 'ph-pause');
         }
 
-        // --- 3. COUNTER ---
+        // --- 4. COUNTER ---
         fetch('https://api.counterapi.dev/v1/riddhi_biodata_global_v2/visits/up')
             .then(r => r.json())
             .then(d => document.getElementById('viewCount').innerText = d.count)
